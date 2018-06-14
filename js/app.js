@@ -2,6 +2,10 @@
  * Create a list that holds all of your cards
  */
 
+const cards = {
+	content: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+};
+
 
 /*
  * Display the cards on the page
@@ -11,6 +15,10 @@
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
+
+const cardTypeList = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb"];
+
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -24,6 +32,110 @@ function shuffle(array) {
 
     return array;
 }
+
+const matchList = [];
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("timer").innerHTML = "<p>00:00</p>";
+    document.querySelector(".deck").innerHTML = '';
+
+    createGrid();
+});
+
+
+// *** main stream
+
+// initiate timer
+document.querySelector(".container").addEventListener("mousedown", timer, {once: true});
+
+document.querySelector(".deck").addEventListener("click", matchCards, true);
+
+function matchCards(evt) {
+
+    const card = evt.target.parentElement;
+
+    if (!card.classList.contains("match")) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        showCard(card);
+        matchList.push(card);
+        console.log(matchList);
+
+        if (matchList.length == 2) {
+            if (matchList[0].innerHTML == matchList[1].innerHTML) {
+                matchList.forEach(function(el) {
+                    el.classList.toggle("match");
+                });
+
+            } else {
+                matchList.forEach(function(el) {
+                    setTimeout(function() {
+                        el.classList.toggle("show");
+                        el.classList.toggle("open");
+                    }, 1000);
+                });
+            };
+
+            matchList.length = 0;
+        };
+    };
+
+};
+
+function createCard(classNames) {
+    const myEl = document.createElement("li");
+    myEl.innerHTML = 
+    `<i class="${classNames}"></i><div class="clickCover"></div>`;
+    myEl.classList.add("card");
+    console.log(myEl);
+
+    return myEl;
+};
+
+function createGrid() {
+    const frag = document.createDocumentFragment();
+
+    shuffle(cardTypeList);
+
+    for (let i = 0; i < cardTypeList.length; i++) {
+        let card = createCard(cardTypeList[i]);
+        frag.appendChild(card);
+    };
+
+    document.querySelector(".deck").appendChild(frag);
+};
+
+function showCard(el) {
+    if (el.nodeName === "LI") {
+        el.classList.toggle("show");
+        el.classList.toggle("open");
+    };
+};
+
+// create timer
+function timer() {
+	const timer = document.getElementById("timer");
+
+	const startTime = new Date().getTime();
+
+	setInterval(function() {
+		const curTime = new Date().getTime();
+
+		const minutes = Math.floor( ( (curTime - startTime) % (1000 * 60 * 60) ) / (1000 * 60) );
+		const seconds = Math.floor( ( (curTime - startTime) % (1000 * 60) ) / 1000);
+
+		timer.innerHTML = `<p>${pad(minutes)}:${pad(seconds)}</p>`
+	}, 1000);
+};
+
+// create pad for timer
+function pad(num) {
+	num = "0".repeat(2 - num.toString().length) + num.toString();
+	return num;
+};
+
+
 
 
 /*
