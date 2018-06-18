@@ -2,10 +2,6 @@
  * Create a list that holds all of your cards
  */
 
-const cards = {
-	content: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-};
-
 
 /*
  * Display the cards on the page
@@ -17,7 +13,6 @@ const cards = {
 // Shuffle function from http://stackoverflow.com/a/2450976
 
 const cardTypeList = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb"];
-
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -39,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("timer").innerHTML = "<p>00:00</p>";
     document.querySelector(".deck").innerHTML = '';
+    // initialize move counter to 0
+    document.querySelector(".moves").innerHTML = 0;
 
     createGrid();
 });
@@ -51,6 +48,11 @@ document.querySelector(".container").addEventListener("mousedown", timer, {once:
 
 document.querySelector(".deck").addEventListener("click", matchCards, true);
 
+// reset
+document.querySelector(".restart").addEventListener("click", function() {
+    location.reload();
+})
+
 function matchCards(evt) {
 
     const card = evt.target.parentElement;
@@ -59,6 +61,7 @@ function matchCards(evt) {
         evt.stopPropagation();
         evt.preventDefault();
         showCard(card);
+        moveCounter();
         matchList.push(card);
         console.log(matchList);
 
@@ -82,6 +85,16 @@ function matchCards(evt) {
     };
 
 };
+
+function moveCounter() {
+    const moves = document.querySelector(".moves").innerHTML;
+
+    let moveNum = Number(moves);
+    moveNum = moveNum + 1;
+    console.log(moves);
+
+    document.querySelector(".moves").innerHTML = moveNum.toString();
+}
 
 function createCard(classNames) {
     const myEl = document.createElement("li");

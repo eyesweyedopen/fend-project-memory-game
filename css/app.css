@@ -22,8 +22,11 @@ body {
 }
 
 .container {
+    height: 100%;
+    width: 100%;
+    box-sizing: content-box;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
@@ -33,17 +36,31 @@ h1 {
     font-weight: 300;
 }
 
+/* 
+ * media queries 
+ */
+
+@media screen and ( min-width: 630px ) {
+    ul.deck {
+        padding: 32px;
+    }
+}
+
+@media screen and ( min-width: 435px ) {
+    .score-panel {
+        width: 345px;
+    }
+}
+
 /*
  * Styles for the deck of cards
  */
 
 .deck {
-    min-width: 660px;
-    width: 95%;
-    min-height: 680px;
-    height: 80vh;
+    width: 90%;
+    height: 90%;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
+    padding: 2.5%;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
@@ -51,16 +68,14 @@ h1 {
     text-align: center;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 3em;
+    margin: 1.25;
 }
 
 .deck .card {
     flex: 1 1 20%;
-    min-height: 125px;
     height: 20%;
-    min-width: 125px;
-    width: 20%;
-    margin: 1em;
+    width: 25%;
+    margin: 1.25%;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -92,14 +107,14 @@ h1 {
 }
 
 .deck .card.show {
-    font-size: 33px;
+    font-size: 1em;
     transition-duration: 0;
 }
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    font-size: 33px;
+    font-size: 1em;
 }
 
 .card .clickCover {
@@ -111,6 +126,26 @@ h1 {
 }
 
 /*
+ * Styles for the header
+ */
+
+header.heading {
+    width: 100%;
+    height: 5%;
+    padding: .5em;
+    background-color: #02ccba;
+}
+
+header h1 {
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/*
  * Styles for the Score Panel
  */
 
@@ -119,8 +154,10 @@ h1 {
     justify-content: space-around;
     align-items: center;
     text-align: left;
-    width: 345px;
-    margin-bottom: 10px;
+    width: 85%;
+    height: 5%;
+    font-size: .75em;
+    margin-top: 10px;
 }
 
 .score-panel .stars {
@@ -144,4 +181,14 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: #2e3d49;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.score-panel>.restart:hover {
+    color: #999999;
 }
