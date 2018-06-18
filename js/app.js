@@ -148,6 +148,20 @@ function pad(num) {
 	return num;
 };
 
+// display modals
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.querySelector("#introModal");
+    const back = document.querySelector(".backCover");
+    modal.style.display = "flex";
+    back.style.display = "block";
+
+    const btn = modal.querySelector(".close");
+    btn.addEventListener("click", function() {
+        modal.style.display = "none";
+        back.style.display = "none";
+    });
+});
+
 
 
 

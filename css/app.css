@@ -192,3 +192,97 @@ header h1 {
 .score-panel>.restart:hover {
     color: #999999;
 }
+
+/*
+ *
+ * Modal for instructions and end game
+ *
+ */
+
+/*
+ * Modal background cover
+ */
+
+.backCover {
+    display: none;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(55, 55, 55, 0.3);
+}
+
+/*
+ * Modal Header
+ */
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #51738f;
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.modal-header h2 {
+    align-self: center;
+}
+
+/*
+ * Modal Body
+ */
+
+.modal-body {
+    padding: 2px 16px;
+}
+
+/*
+ * Modal Footer
+ */
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #51738f;
+    color: white;
+}
+
+/*
+ * Modal Content
+ */
+
+.modal-content {
+    flex-flow: column wrap;
+    text-align: center;
+    display: none;
+    position: relative;
+    background-color: #fefefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.close {
+    order: 1;
+    align-self: flex-end;
+    height: 24px;
+    width: 24px;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+/*
+ * Keyframes
+ */
+
+@Keyframes animatetop {
+    from {margin-top:-300px; opacity: 0}
+    to {margin-top: 30vh; opacity: 1}
+}
+
