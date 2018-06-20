@@ -149,18 +149,21 @@ function pad(num) {
 };
 
 // display modals
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", introModalDisplay);
+
+function introModalDisplay() {
     const modal = document.querySelector("#introModal");
     const back = document.querySelector(".backCover");
     modal.style.display = "flex";
     back.style.display = "block";
 
-    const btn = modal.querySelector(".close");
+    const btn = modal.querySelector(".modal-footer");
     btn.addEventListener("click", function() {
         modal.style.display = "none";
         back.style.display = "none";
+        document.removeEventListener("DOMContentLoaded", introModalDisplay);
     });
-});
+}
 
 
 
