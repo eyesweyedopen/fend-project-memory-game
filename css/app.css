@@ -278,6 +278,6 @@ header h1 {
 
 @Keyframes animatetop {
     from {margin-top:-300px; opacity: 0}
-    to {margin-top: 30vh; opacity: 1}
+    to {margin-top: 5%; opacity: 1}
 }
 
