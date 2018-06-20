@@ -13,6 +13,7 @@
 // Shuffle function from http://stackoverflow.com/a/2450976
 
 const cardTypeList = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb"];
+const matched = [];
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -69,6 +70,7 @@ function matchCards(evt) {
             if (matchList[0].innerHTML == matchList[1].innerHTML) {
                 matchList.forEach(function(el) {
                     el.classList.toggle("match");
+                    matched.push(el);
                 });
 
             } else {
@@ -81,6 +83,12 @@ function matchCards(evt) {
             };
 
             matchList.length = 0;
+            console.log(matched.length);
+
+            //end game
+            if (matched.length == 16) {
+                endGame();
+            };
         };
     };
 
@@ -148,7 +156,11 @@ function pad(num) {
 	return num;
 };
 
+// 
 // display modals
+//
+
+// introModal
 document.addEventListener("DOMContentLoaded", introModalDisplay);
 
 function introModalDisplay() {
@@ -163,8 +175,26 @@ function introModalDisplay() {
         back.style.display = "none";
         document.removeEventListener("DOMContentLoaded", introModalDisplay);
     });
-}
+};
 
+//endModal
+function endGame() {
+    const modal = document.querySelector("#endModal");
+    const back = document.querySelector(".backCover");
+    modal.style.display = "flex";
+    back.style.display = "block";
+
+    const moves = document.querySelector(".moves").innerHTML;
+    const time = `${document.querySelector("#timer").innerHTML.substr(3, 2)} minutes and ${document.querySelector("#timer").innerHTML.substr(6, 2)} seconds`;
+    const starRating = "7.8";
+
+    modal.querySelector(".modal-body").innerHTML = `<p>You matched all cards in ${moves} moves over ${time} with a rating of ${starRating}!<p><p>Thanks for playing!<p>`
+
+    const btn = modal.querySelector(".modal-footer");
+    btn.addEventListener("click", function() {
+        location.reload();
+    });
+};
 
 
 
