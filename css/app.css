@@ -106,7 +106,10 @@ h1 {
 
 .deck .card.show {
     font-size: 1em;
-    transition-duration: 0;
+}
+
+.deck .card.no-match {
+    animation: cardwobble 500ms forwards;
 }
 
 .deck .card.match {
@@ -260,9 +263,7 @@ header h1 {
     border: 1px solid #888;
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: animatetop;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
+    animation-name: animatetop 0.5s forwards;
 }
 
 .modal-footer:hover {
@@ -277,5 +278,15 @@ header h1 {
 @Keyframes animatetop {
     from {margin-top:-300px; opacity: 0}
     to {margin-top: 5%; opacity: 1}
+}
+
+@keyframes cardwobble {
+    0% {transform: rotateZ(0)}
+    10% {transform: rotateZ(10deg)}
+    30% {transform: rotateZ(0)}
+    50% {transform: rotateZ(-10deg)}
+    70% {transform: rotateZ(0)}
+    90% {transform: rotateZ(10deg)}
+    100% {transform: rotateZ(0)}
 }
 

@@ -15,6 +15,9 @@
 const cardTypeList = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb"];
 const matched = [];
 
+// animation checker variable
+let animating = false;
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -61,34 +64,43 @@ function matchCards(evt) {
     if (!card.classList.contains("match")) {
         evt.stopPropagation();
         evt.preventDefault();
-        showCard(card);
-        moveCounter();
-        matchList.push(card);
-        console.log(matchList);
+        if (animating === false) {
 
-        if (matchList.length == 2) {
-            if (matchList[0].innerHTML == matchList[1].innerHTML) {
-                matchList.forEach(function(el) {
-                    el.classList.toggle("match");
-                    matched.push(el);
-                });
-
-            } else {
-                matchList.forEach(function(el) {
-                    setTimeout(function() {
-                        el.classList.toggle("show");
-                        el.classList.toggle("open");
-                    }, 1000);
-                });
+            showCard(card);
+            moveCounter();
+            matchList.push(card);
+            console.log(matchList);
+    
+            if (matchList.length == 2) {
+                if (matchList[0].innerHTML == matchList[1].innerHTML) {
+                    matchList.forEach(function(el) {
+                        el.classList.toggle("match");
+                        matched.push(el);
+                    });
+    
+                } else {
+                    matchList.forEach(function(el) {
+                        setTimeout(function() {
+                            el.classList.toggle("show");
+                            el.classList.toggle("open");
+                            el.classList.toggle("no-match");
+                            animating = false;
+                        }, 1000);
+    
+                        animating = true;
+                        el.classList.toggle("no-match");
+                    });
+                };
+    
+                matchList.length = 0;
+                console.log(matched.length);
+    
+                //end game
+                if (matched.length == 16) {
+                    endGame();
+                };
             };
 
-            matchList.length = 0;
-            console.log(matched.length);
-
-            //end game
-            if (matched.length == 16) {
-                endGame();
-            };
         };
     };
 
