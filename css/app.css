@@ -251,6 +251,7 @@ header h1 {
  */
 
 .modal-content {
+    font-size: 1.2em;
     flex-flow: column wrap;
     text-align: center;
     display: none;
@@ -266,15 +267,9 @@ header h1 {
     animation-fill-mode: forwards;
 }
 
-.close {
-    order: 1;
-    align-self: flex-end;
-    height: 24px;
-    width: 24px;
-}
-
-.close:hover {
+.modal-footer:hover {
     cursor: pointer;
+    background-color: #3d7caf;
 }
 
 /*
