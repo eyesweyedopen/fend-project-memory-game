@@ -98,10 +98,11 @@ function matchCards(evt) {
             // card.setAttribute("flips", cardFlips + 1);
     
             if (matchList.length == 2) {
-                if (matchList[0].innerHTML == matchList[1].innerHTML) {
+                if (matchList[0].innerHTML == matchList[1].innerHTML && !(matchList[0] === matchList[1])) {
                     matchList.forEach(function(el) {
                         el.classList.toggle("match");
                         matched.push(el);
+                        console.log(matched);
                     });
     
                 } else {
