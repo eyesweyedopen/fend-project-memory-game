@@ -12,11 +12,20 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
+/*
+ * data constructs
+ */ 
+
 const cardTypeList = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf", "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb"];
 const matched = [];
+const matchList = [];
+const starCount = [];
+const flipTracker = {};
 
 // animation checker variable
 let animating = false;
+
+
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -32,36 +41,49 @@ function shuffle(array) {
     return array;
 }
 
-const matchList = [];
+
 
 document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("timer").innerHTML = "<p>00:00</p>";
     document.querySelector(".deck").innerHTML = '';
-    // initialize move counter to 0
-    document.querySelector(".moves").innerHTML = 0;
 
     createGrid();
 });
 
 
-// *** main stream
+/*
+ *
+ * main stream
+ * 
+ */ 
 
 // initiate timer
 document.querySelector(".container").addEventListener("mousedown", timer, {once: true});
 
+// initiate star rating
+starRating();
+
+// initiate rating decrementor
+document.querySelector(".container").addEventListener("mousedown", decreaseStars, {once: true});
+
+// initiate grid
 document.querySelector(".deck").addEventListener("click", matchCards, true);
 
 // reset
 document.querySelector(".restart").addEventListener("click", function() {
     location.reload();
-})
+});
+
+/*
+ * FUNCTIONS
+ */ 
 
 function matchCards(evt) {
 
     const card = evt.target.parentElement;
 
-    if (!card.classList.contains("match")) {
+    if (!card.classList.contains("match") && card.nodeName != "DIV") {
         evt.stopPropagation();
         evt.preventDefault();
         if (animating === false) {
@@ -69,7 +91,11 @@ function matchCards(evt) {
             showCard(card);
             moveCounter();
             matchList.push(card);
-            console.log(matchList);
+            console.log(card);
+
+            // flip incrementor for star rating ****TO BE ADDED****
+            // const cardFlips = Number(card.getAttribute("flips"));
+            // card.setAttribute("flips", cardFlips + 1);
     
             if (matchList.length == 2) {
                 if (matchList[0].innerHTML == matchList[1].innerHTML) {
@@ -111,7 +137,6 @@ function moveCounter() {
 
     let moveNum = Number(moves);
     moveNum = moveNum + 1;
-    console.log(moves);
 
     document.querySelector(".moves").innerHTML = moveNum.toString();
 }
@@ -119,9 +144,8 @@ function moveCounter() {
 function createCard(classNames) {
     const myEl = document.createElement("li");
     myEl.innerHTML = 
-    `<i class="${classNames}"></i><div class="clickCover"></div>`;
+    `<i class="${classNames}"></i><div class="clickCover" flips="0"></div>`;
     myEl.classList.add("card");
-    console.log(myEl);
 
     return myEl;
 };
@@ -168,9 +192,41 @@ function pad(num) {
 	return num;
 };
 
-// 
-// display modals
-//
+// star rating system
+function starRating() {
+    const stars = document.querySelector(".stars");
+
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 5; i++) {
+        const star = document.createElement("li");
+        star.innerHTML = `<i class="fa fa-star"></i>`;
+        starCount.push(star);
+        for (let star of starCount) {
+            frag.appendChild(star);
+        };
+    };
+
+    stars.appendChild(frag);
+};
+
+function decreaseStars() {
+    const stars = document.querySelector(".stars");
+
+        const interval = setInterval(function() {
+
+            if (stars.children.length == 1) {
+                clearInterval(interval);
+            };
+
+            stars.style.display = "none";
+            stars.removeChild(stars.querySelector("li"));
+            stars.style.display = "inline-block";
+        }, 30000);
+};
+
+/* 
+ * display modals
+ */
 
 // introModal
 document.addEventListener("DOMContentLoaded", introModalDisplay);
