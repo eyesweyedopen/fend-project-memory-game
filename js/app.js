@@ -254,9 +254,9 @@ function endGame() {
 
     const moves = document.querySelector(".moves").innerHTML;
     const time = `${document.querySelector("#timer").innerHTML.substr(3, 2)} minutes and ${document.querySelector("#timer").innerHTML.substr(6, 2)} seconds`;
-    const starRating = "7.8";
+    const starRating = document.querySelector(".stars").children.length.toString();
 
-    modal.querySelector(".modal-body").innerHTML = `<p>You matched all cards in ${moves} moves over ${time} with a rating of ${starRating}!<p><p>Thanks for playing!<p>`
+    modal.querySelector(".modal-body").innerHTML = `<p>You matched all cards in ${moves} moves over ${time} with a rating of ${starRating} out of 5 stars!<p><p>Thanks for playing!<p>`
 
     const btn = modal.querySelector(".modal-footer");
     btn.addEventListener("click", function() {
